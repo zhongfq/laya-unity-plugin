@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+using System.IO;
 
 internal class AssetsUtil 
 {
@@ -9,16 +10,22 @@ internal class AssetsUtil
         return AssetDatabase.GetAssetPath(texture.GetInstanceID());
     }
 
+    public static string GetFileName(string path, string fileName)
+    {
+        string pathFileName = Path.GetFileName(path);
+        return pathFileName == fileName ? null : fileName;
+    }
+
     public static string GetAnimationClipPath(AnimationClip clip)
     {
         string path = AssetDatabase.GetAssetPath(clip.GetInstanceID());
-        string fileName = path == clip.name ? null : clip.name;
+        string fileName = AssetsUtil.GetFileName(path, clip.name);
         return AssetsUtil.GetFilePath(AssetDatabase.GetAssetPath(clip.GetInstanceID()), ".lani", fileName);
     }
     public static string GetAnimatorControllerPath(AnimatorController animatorController)
     {
         string path = AssetDatabase.GetAssetPath(animatorController.GetInstanceID());
-        string fileName = path == animatorController.name ? null : animatorController.name;
+        string fileName = AssetsUtil.GetFileName(path, animatorController.name);
         return AssetsUtil.GetFilePath(AssetDatabase.GetAssetPath(animatorController.GetInstanceID()), ".controller", fileName);
     }
     public static string GetMaterialPath(Material material)
