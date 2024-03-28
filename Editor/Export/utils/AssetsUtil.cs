@@ -12,7 +12,10 @@ internal class AssetsUtil
 
     public static string GetFileName(string path, string fileName)
     {
-        string pathFileName = Path.GetFileName(path);
+        if (Path.GetExtension(path).ToLower() == ".fbx") {
+            return fileName;
+        }
+        string pathFileName = Path.GetFileNameWithoutExtension(path);
         return pathFileName == fileName ? null : fileName;
     }
 
